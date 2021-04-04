@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div style="text-align: center">
+        <h1 style="color: cornflowerblue">Files</h1>
+        <div id="BackToHomeDiv" style="text-align: left">
+            <form th:action="@{/home}">
+                <button id="backToHome" type="submit" class="btn btn-warning pull-right">Back to home page</button>
+            </form>
+            <br>
+        </div>
+        <br>
+        <div>
+            <form method="POST" enctype="multipart/form-data" th:action="@{/files/uploadFile}">
+                <div>
+                    <label for="fileUpload">Upload a New File:</label>
+                    <br>
+                </div>
+                <div>
+                    <input type="file"   class="center-block" id="fileUpload" name="fileUpload" ><br>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-striped" id="fileTable">
+        <thead>
+        <tr>
+            <th style="width:5%" scope="col"></th>
+            <th style="width: 15%" scope="col"></th>
+            <th style="width: 80%" scope="col">File name</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr class="file-row" id="file-list" th:each="file : ${files}">
+                <td>
+                    <form th:action="@{'/files/downloadFile/' + ${file.fileId}}" method="get" target="_blank" >
+                        <button class="btn btn-success" id="download" type="submit">Download</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{'/files/deleteFile/' + ${file.fileId}}" method="get">
+                        <button class="btn btn-danger" id="delete" type="submit">Delete</button>
+                    </form>
+                </td>
+                <td th:text="${file.fileName}">Example file name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

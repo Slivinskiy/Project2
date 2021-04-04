@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>Note Form</title>
+</head>
+<body>
+<div>
+    <div th:if="${noteid < 0}">
+        <h1 style="text-align: center">Add new note</h1>
+    </div>
+    <div th:if="${noteid > 0}">
+        <h1 style="text-align: center">Update the note</h1>
+    </div>
+    <div id="BackToHomeDiv" style="text-align: left">
+        <form th:action="@{/notes}" method="get">
+            <button id="backToNotes" type="submit" class="btn btn-warning pull-right">Back to notes page</button>
+            <br>
+        </form>
+        <br>
+    </div>
+    <form th:if="${noteid < 0}" th:action="@{/notes/newNote}" th:object="${note}" method="post">
+        <div class="container col-md-5; center-block">
+            <fieldset class="form-group">
+                <label>Note Title: </label> <input th:field="*{noteTitle}" type="text" class="form-control"
+                                                   name="noteTitle" required="required">
+            </fieldset>
+            <fieldset class="form-group">
+                <label>Note Decription: </label> <input th:field="*{noteDescription}" type="text"
+                                                        class="form-control" name="noteDescription">
+            </fieldset>
+            <br>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+    <form th:if="${noteid > 0}" th:action="@{'/notes/updateNote/' + ${note.noteId}}" th:object="${note}" method="post">
+        <div class="container col-md-5; center-block">
+            <fieldset class="form-group">
+                <label>Note Title: </label> <input th:field="*{noteTitle}" type="text" class="form-control"
+                                                   name="noteTitle" required="required">
+            </fieldset>
+            <fieldset class="form-group">
+                <label>Note Decription: </label> <input  th:field="*{noteDescription}" type="text"
+                                                        class="form-control" name="noteDescription">
+            </fieldset>
+            <br>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

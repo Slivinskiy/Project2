@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>Result</title>
+</head>
+<body>
+<div style="text-align: center">
+    <div id="success-save-note-msg" th:if="${SuccessSaveNote}" class="alert alert-success center-block" style="text-align: center">
+        Your note was successfully created.
+    </div>
+    <div id="success-update-note-msg" th:if="${SuccessUpdateNote}" class="alert alert-success">
+        The Note was updated
+    </div>
+    <div id="success-delete-note-msg" th:if="${SuccessDelete}" class="alert alert-success">
+        The note was deleted
+    </div>
+    <div id="success-save-credentials-msg" th:if="${credentialsSuccess}" class="alert alert-success center-block" style="text-align: center">
+        Your credentials was successfully created.
+    </div>
+    <div id="success-delete-msg-credentials" th:if="${SuccessDeleteCredentials}" class="alert alert-success">
+        Credentials were deleted
+    </div>
+    <div id="success-update-msg-credentials" th:if="${SuccessUpdateCredentials}" class="alert alert-success">
+        Credentials were updated
+    </div>
+    <div id="success-upload-msg-files" th:if="${SuccessUploadFile}" class="alert alert-success">
+        The file was uploaded successfully
+    </div>
+    <div id="success-delete-msg-files" th:if="${SuccessDeleteFile}" class="alert alert-success">
+        The file was deleted
+    </div>
+    <div id="error-save-note-msg" th:if="${ErrorSaveNote}" class="alert alert-danger" style="text-align: center">
+        There was a problem saving the note. Please, try again!
+    </div>
+    <div id="error-delete-note-msg" th:if="${ErrorDelete}" class="alert alert-danger">
+        There was a problem deleting the note. Please, try again!
+    </div>
+    <div id="error-update-note-msg" th:if="${ErrorUpdateNote}" class="alert alert-danger">
+        There was a problem updating the note. Please, try again!
+    </div>
+    <div id="error-save-credentials-msg" th:if="${credentialsError}" class="alert alert-danger" style="text-align: center">
+        There was a problem saving the credentials. Please, try again!
+    </div>
+    <div id="error-delete-msg-credentials" th:if="${ErrorDeleteCredentials}" class="alert alert-danger">
+        There was a problem deleting credentials. Please, try again!
+    </div>
+    <div id="error-update-msg-credentials" th:if="${ErrorUpdateCredentials}" class="alert alert-danger">
+        There was a problem updating credentials. Please, try again!
+    </div>
+    <div id="error-upload-msg-files" th:if="${ErrorUploadFile}" class="alert alert-danger">
+        There was a problem uploading the file. Please, try again!
+    </div>
+    <div id="error-delete-msg-files" th:if="${ErrorDeleteFile}" class="alert alert-danger">
+        There was a problem deleting the file. Please, try again!
+    </div>
+    <div id="error-upload-big-file-msg" th:if="${FileTooLong}" class="alert alert-danger">
+        The file you trying to upload is too long!
+    </div>
+    <div style="text-align: center">
+        <div id="BackToHomeDiv" >
+            <form th:action="@{/home}">
+                <button id="backToHome" type="submit" class="btn btn-warning ">Go to home page</button>
+            </form>
+            <br>
+        </div>
+        <div>
+            <form th:action="@{/notes}">
+                <button id="backToNotes" type="submit" class="btn btn-info">Go to notes page</button>
+            </form>
+            <br>
+        </div>
+        <div>
+            <form th:action="@{/credentials}">
+                <button id="backToCredentials" type="submit" class="btn btn-success">Go to credentials page</button>
+            </form>
+            <br>
+        </div>
+        <div>
+            <form th:action="@{/files}">
+                <button id="backToFiles" type="submit" class="btn btn-primary">Go to files page</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
