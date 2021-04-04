@@ -1,6 +1,9 @@
 package sviatoslav_slivinskyi_project_2.spring_application.IntegrationTest;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,12 +23,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class LoginAndSignupTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
+    @Order(1)
     public void accessDeniedTest() throws Exception {
         this.mockMvc.perform(get("/home"))
                 .andDo(print())
@@ -34,6 +39,7 @@ class LoginAndSignupTest {
     }
 
     @Test
+    @Order(2)
     public void badCredentialsTest() throws Exception {
         this.mockMvc.perform(formLogin().user("v").password("1111111"))
                 .andDo(print())
@@ -42,6 +48,7 @@ class LoginAndSignupTest {
     }
 
     @Test
+    @Order(3)
     public void registerUserTest() throws Exception {
         this.mockMvc.perform(post("/signup").param("firstName", "Sviat").param("lastName", "Slivi").param("username", "k").param("password", "1111111"))
                 .andDo(print())
@@ -50,6 +57,7 @@ class LoginAndSignupTest {
     }
 
     @Test
+    @Order(4)
     public void correctLoginTest() throws Exception {
         this.mockMvc.perform(formLogin().user("k").password("1111111"))
                 .andDo(print())
@@ -58,6 +66,7 @@ class LoginAndSignupTest {
     }
 
     @Test
+    @Order(5)
     public void homePageTest() throws Exception {
         this.mockMvc.perform(get("/home").with(user("k").password("1111111")))
                 .andDo(print())

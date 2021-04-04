@@ -1,6 +1,9 @@
 package sviatoslav_slivinskyi_project_2.spring_application.IntegrationTest;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,20 +20,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "k", password = "1111111")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NoteControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void viewNotesPageTest() throws Exception{
-        this.mockMvc.perform(get("/notes"))
-                .andDo(print())
-                .andExpect(authenticated())
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
+    @Order(1)
     public void addNoteTest() throws Exception{
         this.mockMvc.perform(post("/notes/newNote").param("noteTitle", "Test note").param("noteDescription","test description"))
                 .andDo(print())
@@ -40,16 +37,28 @@ public class NoteControllerTest {
     }
 
     @Test
-    public void updateNoteTest() throws Exception{
-        this.mockMvc.perform(post("/notes/updateNote/50?").param("noteTitle", "Updated note"))
+    @Order(2)
+    public void viewNotesPageTest() throws Exception{
+        this.mockMvc.perform(get("/notes"))
+                .andDo(print())
+                .andExpect(authenticated())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+
+    @Test
+    @Order(3)
+    public void editNoteTest() throws Exception{
+        this.mockMvc.perform(post("/notes/updateNote/1?").param("noteTitle", "Updated note"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attribute("SuccessUpdateNote", true));
     }
 
     @Test
-    public void deleteNoteTest() throws Exception{
-        this.mockMvc.perform(get("/notes/deleteNote/38?"))
+    @Order(4)
+    public void removeNoteTest() throws Exception{
+        this.mockMvc.perform(get("/notes/deleteNote/1?"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attribute("SuccessDelete", true));

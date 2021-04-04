@@ -1,9 +1,13 @@
 package sviatoslav_slivinskyi_project_2.spring_application.IntegrationTest;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,20 +21,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "k", password = "1111111")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FileControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void viewFilePageTest() throws Exception {
-        this.mockMvc.perform(get("/files"))
-                .andDo(print())
-                .andExpect(authenticated())
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
+    @Order(1)
     public void uploadFileTest() throws Exception {
         this.mockMvc.perform(multipart("/files/uploadFile").file("fileUpload", "123".getBytes()))
                 .andDo(print())
@@ -39,15 +37,26 @@ public class FileControllerTest {
     }
 
     @Test
-    public void downloadFileTest() throws Exception {
-        this.mockMvc.perform(get("/files/downloadFile/59?"))
+    @Order(2)
+    public void viewFilePageTest() throws Exception {
+        this.mockMvc.perform(get("/files"))
                 .andDo(print())
+                .andExpect(authenticated())
                 .andExpect(status().is2xxSuccessful());
     }
 
+//    @Test
+//    @Order(3)
+//    public void downloadFileTest() throws Exception {
+//        this.mockMvc.perform(get("/files/downloadFile/1?"))
+//                .andDo(print())
+//                .andExpect(status().is2xxSuccessful());
+//    }
+
     @Test
-    public void deleteFileTest() throws Exception {
-       this.mockMvc.perform(get("/files/deleteFile/56?"))
+    @Order(4)
+    public void removeFileTest() throws Exception {
+       this.mockMvc.perform(get("/files/deleteFile/1?"))
                .andDo(print())
                .andExpect(status().is2xxSuccessful())
                .andExpect(model().attribute("SuccessDeleteFile", true));
